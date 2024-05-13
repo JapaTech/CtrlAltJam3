@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GreenLight : Light
 {
+    //Luz temporária
     [SerializeField] float tempoApagado = 5;
     public override void AcenderApagar()
     {
