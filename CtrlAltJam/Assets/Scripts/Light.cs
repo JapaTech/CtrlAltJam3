@@ -5,22 +5,37 @@ using UnityEngine;
 public class Light : MonoBehaviour
 {
     [SerializeField] bool aceso = false;
+    [SerializeField] Color corAceso = Color.yellow;
+    
+    protected bool Aceso
+    {
+        set
+        {
+            aceso = value;
+            sp.color = getColor();
+        }
+    }
 
-
-    //FIXME: Isso é apenas um teste
-    SpriteRenderer sp;
+    protected SpriteRenderer sp;
 
     private void Start()
     {
         sp = GetComponent<SpriteRenderer>();
-        sp.enabled = aceso;
+        Aceso = aceso;
     }
 
-
-    public void AcenderApagar()
+    public virtual void AcenderApagar()
     {
-        aceso = !aceso;
-        sp.enabled = aceso;
+        Aceso = !aceso;
+    }
+
+    Color getColor()
+    {
+        if (aceso)
+        {
+            return corAceso;
+        }
+        return Color.white;
     }
 
 }
