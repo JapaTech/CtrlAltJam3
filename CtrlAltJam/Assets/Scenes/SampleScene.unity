@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 293751450}
   - component: {fileID: 293751449}
   - component: {fileID: 293751451}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Chao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,6 +407,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jump: 10
+  layerChao:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &2030558793
 GameObject:
   m_ObjectHideFlags: 0
