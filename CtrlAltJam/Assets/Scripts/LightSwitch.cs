@@ -10,11 +10,11 @@ public class LightSwitch : MonoBehaviour
     public delegate void MyDelegate();
     MyDelegate ligarApagar;
 
-    [SerializeField] Light[] luzes;
+    [SerializeField] Light_Project[] luzes;
 
     private void Start()
     {
-        foreach(Light l in luzes)
+        foreach(Light_Project l in luzes)
         {
             ligarApagar += l.AcenderApagar;
         }

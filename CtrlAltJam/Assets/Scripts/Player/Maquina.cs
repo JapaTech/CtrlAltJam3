@@ -38,6 +38,13 @@ namespace Player
         //Inputs
         private PlayerInputsActions playerInput;
 
+        //Acoes
+        [SerializeField] private Transform inicioAcao;
+        [SerializeField] float raioAcao;
+        [SerializeField] float distanciaAcao;
+        [SerializeField] LayerMask acao_lm;
+        RaycastHit2D acaoDetectada_rh;
+
         //Máquina de estados
         private EstadoBase estadoAtual;
         private Fabrica fabrica;
@@ -65,6 +72,13 @@ namespace Player
         {
             playerInput.Player.Enable();
             playerInput.Player.Pulo.performed += Pulo_performed;
+            playerInput.Player.Acao.canceled += TentaExecutarAcao;
+        }
+
+        private void OnDisable()
+        {
+            playerInput.Player.Pulo.performed -= Pulo_performed;
+            playerInput.Player.Acao.canceled -= TentaExecutarAcao;
         }
 
         private void Pulo_performed(InputAction.CallbackContext obj)
@@ -72,7 +86,6 @@ namespace Player
             if (estaNoChao)
             {
                 pediuPular = true;
-                rb.AddForce(Vector2.up * 100);
             }
         }
 
@@ -105,7 +118,6 @@ namespace Player
             estadoAtual.UpdateEstados();
             VerificaChao();
             AplicaMovimento();
-
         }
 
         private void InputMovimento()
@@ -123,6 +135,10 @@ namespace Player
 
         private void AplicaMovimento()
         {
+            if(calculaMovimentos.y < -15)
+            {
+                calculaMovimentos.y = -15;
+            }
             rb.velocity = calculaMovimentos;
         }
 
@@ -149,6 +165,20 @@ namespace Player
             //Debug.Log(estaNoChao);
         }
 
+        private void TentaExecutarAcao(InputAction.CallbackContext obj)
+        {
+            Debug.Log("Tentou Executar acao");
+            acaoDetectada_rh = Physics2D.CircleCast(inicioAcao.position, raioAcao, Vector2.right, distanciaAcao, acao_lm);
+
+            if (acaoDetectada_rh)
+            Debug.Log(acaoDetectada_rh.transform.name);
+
+            if (acaoDetectada_rh)
+            {
+                acaoDetectada_rh.transform.gameObject.GetComponent<Acoes>().ExecutaAcao();
+            }
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Flutuar"))
@@ -164,6 +194,13 @@ namespace Player
                 podeFlutuar = false;
                 flutuar = false;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(inicioAcao.position, raioAcao);
+            Gizmos.DrawLine(inicioAcao.position, inicioAcao.position + Vector3.right * distanciaAcao);
         }
     }
 

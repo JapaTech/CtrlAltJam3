@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TemporaryLight : Light
+public class TemporaryLight : Light_Project
 {
     //Luz temporária
     [SerializeField] float tempoApagado = 5;

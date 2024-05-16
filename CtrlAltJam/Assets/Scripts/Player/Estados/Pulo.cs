@@ -22,7 +22,7 @@
 
         public override void ChecaTrocaDeEstado()
         {
-            if (ctx.EstaNoChao == true)
+            if (ctx.EstaNoChao == true && !ctx.EstaPulando)
             {
                 TrocaEstados(fabrica.NoChao());
             }
@@ -30,7 +30,7 @@
             {
                 TrocaEstados(fabrica.Caindo());
             }
-            else if (ctx.PodeFlutuar)
+            else if (ctx.Flutuar)
             {
                 TrocaEstados(fabrica.Flutuar());
             }

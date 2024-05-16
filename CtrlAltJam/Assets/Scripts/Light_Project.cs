@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Light : MonoBehaviour
+public class Light_Project : MonoBehaviour
 {
     [SerializeField] bool aceso = false;
     [SerializeField] Color corAceso = Color.yellow;

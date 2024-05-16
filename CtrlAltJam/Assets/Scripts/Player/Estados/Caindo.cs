@@ -29,6 +29,7 @@
 
         public override void FinalizaEstado()
         {
+            ctx.CalculoMovimentosY = 0;
             ctx.PediuPulo = false;
         }     
 
