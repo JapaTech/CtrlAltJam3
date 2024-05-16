@@ -4,31 +4,49 @@
     {
         public Flutuar(Maquina _contextoAtual, Fabrica _fabrica) : base(_contextoAtual, _fabrica)
         {
-        }
-
-        public override void AtualizaEstado()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ChecaTrocaDeEstado()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void FinalizaEstado()
-        {
-            throw new System.NotImplementedException();
+            estadoRaiz = true;
+            InicializaSubestado();
         }
 
         public override void InicializaEstado()
         {
-            throw new System.NotImplementedException();
+            ctx.Rb.gravityScale = 0;
+        }
+
+        public override void AtualizaEstado()
+        {
+            ctx.CalculoMovimentosY = ctx.InputMovimentos.y * ctx.VelParaFlutuar;
+            ChecaTrocaDeEstado();
+        }
+
+        public override void ChecaTrocaDeEstado()
+        {
+            if(ctx.EstaNoChao && !ctx.PodeFlutuar)
+            {
+                TrocaEstados(fabrica.NoChao());
+            }
+            if(!ctx.EstaNoChao && !ctx.PodeFlutuar)
+            {
+                TrocaEstados(fabrica.Caindo());
+            }
+        }
+
+        public override void FinalizaEstado()
+        {
+            ctx.Rb.gravityScale = ctx.GravidadeInicial;
+            ctx.PediuPulo = false;
         }
 
         public override void InicializaSubestado()
         {
-            throw new System.NotImplementedException();
+            if (ctx.InputMovimentos.x != 0)
+            {
+                DefinaSubestado(fabrica.Andando());
+            }
+            else if (ctx.InputMovimentos.x == 0)
+            {
+                DefinaSubestado(fabrica.Parado());
+            }
         }
     }
 }

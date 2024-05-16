@@ -2,33 +2,56 @@
 {
     public class Pulo : EstadoBase
     {
+
         public Pulo(Maquina _contextoAtual, Fabrica _fabrica) : base(_contextoAtual, _fabrica)
         {
-        }
-
-        public override void AtualizaEstado()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ChecaTrocaDeEstado()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void FinalizaEstado()
-        {
-            throw new System.NotImplementedException();
+            estadoRaiz = true;
+            InicializaSubestado();
         }
 
         public override void InicializaEstado()
         {
-            throw new System.NotImplementedException();
+            ctx.StartCoroutine("EstaNoPulo");
+            ctx.CalculoMovimentosY = ctx.AlturaPulo;
         }
+
+        public override void AtualizaEstado()
+        {
+            ChecaTrocaDeEstado();
+        }
+
+        public override void ChecaTrocaDeEstado()
+        {
+            if (ctx.EstaNoChao == true)
+            {
+                TrocaEstados(fabrica.NoChao());
+            }
+            else if (ctx.EstaPulando == false && ctx.EstaNoChao == false)
+            {
+                TrocaEstados(fabrica.Caindo());
+            }
+            else if (ctx.PodeFlutuar)
+            {
+                TrocaEstados(fabrica.Flutuar());
+            }
+        }
+
+        public override void FinalizaEstado()
+        {
+            
+        }
+
 
         public override void InicializaSubestado()
         {
-            throw new System.NotImplementedException();
+            if (ctx.InputMovimentos.x != 0)
+            {
+                DefinaSubestado(fabrica.Andando());
+            }
+            else if (ctx.InputMovimentos.x == 0)
+            {
+                DefinaSubestado(fabrica.Parado());
+            }
         }
     }
 }

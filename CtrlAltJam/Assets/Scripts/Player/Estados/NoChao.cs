@@ -8,29 +8,48 @@
             InicializaSubestado();
         }
 
+        public override void InicializaEstado()
+        {
+         
+        }
+
         public override void AtualizaEstado()
         {
-            throw new System.NotImplementedException();
+            ctx.CalculoMovimentosY = 0;
+            ChecaTrocaDeEstado();
         }
 
         public override void ChecaTrocaDeEstado()
         {
-            throw new System.NotImplementedException();
+            
+            if (ctx.PediuPulo && ctx.EstaNoChao)
+            {
+                TrocaEstados(fabrica.Pulo());
+            }
+            else if (ctx.Flutuar)
+            {
+                TrocaEstados(fabrica.Flutuar());
+            }
+            if (!ctx.EstaNoChao)
+            {
+                TrocaEstados(fabrica.Caindo());
+            }
         }
 
         public override void FinalizaEstado()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void InicializaEstado()
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void InicializaSubestado()
         {
-            throw new System.NotImplementedException();
+            if(ctx.InputMovimentos.x != 0)
+            {
+                DefinaSubestado(fabrica.Andando());
+            }
+            else if (ctx.InputMovimentos.x == 0)
+            {
+                DefinaSubestado(fabrica.Parado());
+            }
         }
     }
 }

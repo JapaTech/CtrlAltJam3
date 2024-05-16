@@ -6,29 +6,32 @@
         {
         }
 
+
+        public override void InicializaEstado()
+        {
+        }
+
         public override void AtualizaEstado()
         {
-            throw new System.NotImplementedException();
+            ChecaTrocaDeEstado();
+
+            ctx.CalculoMovimentosX = ctx.InputMovimentos.x * ctx.VelMovimento;
         }
 
         public override void ChecaTrocaDeEstado()
         {
-            throw new System.NotImplementedException();
+            if(ctx.CalculoMovimentosX == 0)
+            {
+                TrocaEstados(fabrica.Parado());
+            }
         }
 
         public override void FinalizaEstado()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void InicializaEstado()
-        {
-            throw new System.NotImplementedException();
         }
 
         public override void InicializaSubestado()
         {
-            throw new System.NotImplementedException();
         }
     }
 }
