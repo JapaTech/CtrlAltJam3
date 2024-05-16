@@ -120,6 +120,10 @@ namespace Player
             AplicaMovimento();
         }
 
+        private void LateUpdate()
+        {
+            OlhaParaDirecao();
+        }
         private void InputMovimento()
         {
             inputMovimentos = playerInput.Player.Movimento.ReadValue<Vector2>();
@@ -131,6 +135,16 @@ namespace Player
             {
                 flutuar = true;
             }
+        }
+
+        private void OlhaParaDirecao()
+        {
+            if(inputMovimentos.x != 0)
+            {
+                olhaParaDirecao.x = inputMovimentos.x;
+            }
+
+            tr.right = olhaParaDirecao;
         }
 
         private void AplicaMovimento()
