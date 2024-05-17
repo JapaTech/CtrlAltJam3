@@ -30,7 +30,7 @@
             {
                 TrocaEstados(fabrica.Caindo());
             }
-            else if (ctx.Flutuar)
+            else if (ctx.PodeFlutuar && ctx.Flutuar)
             {
                 TrocaEstados(fabrica.Flutuar());
             }

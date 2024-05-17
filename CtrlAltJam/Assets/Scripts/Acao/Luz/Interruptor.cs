@@ -1,12 +1,13 @@
 using UnityEngine;
+using Luz;
 
 public class Interruptor : MonoBehaviour, Acoes
 {
-    [SerializeField] private FonteDeLuz[] luzes;
+    [SerializeField] private Comum[] luzes;
 
     public void ExecutaAcao()
     {
-        foreach (FonteDeLuz luz in luzes)
+        foreach (Comum luz in luzes)
         {
             luz.Troca();
         }
