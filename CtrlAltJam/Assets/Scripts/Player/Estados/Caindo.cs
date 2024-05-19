@@ -25,6 +25,10 @@
             {
                 TrocaEstados(fabrica.NoChao());
             }
+            else if (ctx.PodeFlutuar && ctx.Flutuar)
+            {
+                TrocaEstados(fabrica.Flutuar());
+            }
         }
 
         public override void FinalizaEstado()

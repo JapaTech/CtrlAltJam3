@@ -19,6 +19,9 @@ namespace Player
         private Vector2 inputMovimentos;
         private Vector3 olhaParaDirecao;
         private bool viradoParaDireita;
+        [SerializeField] private Transform origemEncostoParede;
+        [SerializeField] private Vector2 encostadoParede;
+        RaycastHit2D bateuNaParede_rh;
 
         //Pulo
         [SerializeField] private float velocidadePulo;
@@ -117,6 +120,7 @@ namespace Player
         {
             estadoAtual.UpdateEstados();
             VerificaChao();
+            EncostadoNaParede();
             AplicaMovimento();
         }
 
@@ -145,6 +149,22 @@ namespace Player
             }
 
             tr.right = olhaParaDirecao;
+        }
+
+        private void EncostadoNaParede()
+        {
+            if(Physics2D.OverlapBox(origemEncostoParede.position, encostadoParede, 0, solo_lm))
+            {
+                if(inputMovimentos.x > 0 && calculaMovimentos.x > 0)
+                {
+                    calculaMovimentos.x = 0;
+                }
+                else if (inputMovimentos.x < 0 && calculaMovimentos.x < 0)
+                {
+                    calculaMovimentos.x = 0;
+                }
+                
+            }
         }
 
         private void AplicaMovimento()
@@ -215,6 +235,9 @@ namespace Player
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(inicioAcao.position, raioAcao);
             Gizmos.DrawLine(inicioAcao.position, inicioAcao.position + Vector3.right * distanciaAcao);
+
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireCube(origemEncostoParede.position, encostadoParede);
         }
     }
 
